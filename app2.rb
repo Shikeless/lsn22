@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 
@@ -5,8 +6,8 @@ get '/' do
 	erb ''
 end
 
-get '/tablet' do
-	erb :tablet
+get '/about' do
+	erb :about
 end
 
 post '/' do
@@ -14,6 +15,6 @@ post '/' do
 	@admin_password = params['password']
 
 	if @admin_login == 'admin' && @admin_password == 'secret'
-		redirect '/tablet'	
+		erb :tablet	
 	end	
 end
