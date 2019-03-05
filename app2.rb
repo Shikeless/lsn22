@@ -28,6 +28,18 @@ post '/' do
 end
 
 post '/visit' do
+	hh = {"#7bd148" => "Green",
+		"#5484ed" => "Bold blue",
+		"#a4bdfc" => "Blue",
+		"#46d6db" => "Turquoise",
+		"#7ae7bf" => "Light green",
+		"#51b749" => "Bold green",
+		"#fbd75b" => "Yellow",
+		"#ffb878" => "Orange",
+		"#ff887c" => "Red",
+		"#dc2127" => "Bold red",
+		"#dbadff" => "Purple",
+		"#e1e1e1" => "Gray"}
 	@visit_name = params['visit_name']
 	@visit_phone = params['visit_phone']
 	@visit_time = params['visit_time']
@@ -35,7 +47,7 @@ post '/visit' do
 	@visit_color = params['visit_color']
 
 	f = File.open './public/clients.txt', 'a'
-	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{@visit_color}"
+	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{hh[@visit_color]}"
 	f.close
 
     erb "Уважаемый #{@visit_name}, вас будет ждать #{@visit_specialist}, в #{@visit_time}, до скорого."

@@ -3,7 +3,7 @@ x = File.open './public/clients.txt', 'r:UTF-8'
 @xx = []
 loop do
 	@aa = []
-	4.times do
+	5.times do
 		@line = x.gets
 		break if @line == nil
 		if @line != nil 
@@ -25,6 +25,7 @@ f.write "\t\t\t<th scope=\"col\">Name</th>\n"
 f.write "\t\t\t<th scope=\"col\">Time</th>\n"
 f.write	"\t\t\t<th scope=\"col\">Phone</th>\n"
 f.write "\t\t\t<th scope=\"col\">Specialist</th>\n"
+f.write "\t\t\t<th scope=\"col\">Color</th>\n"
 f.write "\t\t</tr>\n"
 f.write "\t</thead>\n"
 f.write "\t<tbody>\n"
@@ -33,9 +34,10 @@ n = 1
 	f.write "\t\t<tr>\n"
 	f.write "\t\t\t<th scope=\"row\">#{n}</th>\n"
 	f.write "\t\t\t<td>#{i[0]}</td>\n"
-        f.write "\t\t\t<td>#{i[1]}</td>\n"
+    f.write "\t\t\t<td>#{i[1]}</td>\n"
 	f.write "\t\t\t<td>#{i[2]}</td>\n"
 	f.write "\t\t\t<td>#{i[3]}</td>\n"
+	f.write "\t\t\t<td>#{i[4]}</td>\n"
 	f.write "\t\t</tr>\n"
 	n += 1
 end
