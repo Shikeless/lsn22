@@ -41,6 +41,7 @@ post '/visit' do
 		"#dc2127" => "Bold red",
 		"#dbadff" => "Purple",
 		"#e1e1e1" => "Gray"}
+
 	loop do
 		@error = 0
 		@visit_name = params['visit_name']
@@ -48,9 +49,6 @@ post '/visit' do
 		@visit_time = params['visit_time']
 		@visit_specialist = params['visit_specialist']
 		@visit_color = params['visit_color']
-		@error = "Заполните поле \"Ваше имя\"" if @visit_name == nil
-		@error = "Заполните поле \"Ваш номер телефона\"" if @visit_phone == nil
-		@error = "Заполните поле \"Желаемая время\"" if @visit_time == nil
 		break if @error == 0
 	end
 

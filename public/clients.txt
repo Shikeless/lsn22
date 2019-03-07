@@ -1,13 +1,9 @@
 ﻿Alex
 96505443
 12:30
-Жан
-Bold blue
-
-12:30
 Пьер
-Green
-
+GreenAlex
+6774383
 12:30
 Пьер
 Green
