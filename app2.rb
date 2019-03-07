@@ -3,6 +3,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 
 get '/' do
+	@error = "something wrong!"
 	erb ''
 end
 
@@ -40,11 +41,18 @@ post '/visit' do
 		"#dc2127" => "Bold red",
 		"#dbadff" => "Purple",
 		"#e1e1e1" => "Gray"}
-	@visit_name = params['visit_name']
-	@visit_phone = params['visit_phone']
-	@visit_time = params['visit_time']
-	@visit_specialist = params['visit_specialist']
-	@visit_color = params['visit_color']
+	loop do
+		@error = 0
+		@visit_name = params['visit_name']
+		@visit_phone = params['visit_phone']
+		@visit_time = params['visit_time']
+		@visit_specialist = params['visit_specialist']
+		@visit_color = params['visit_color']
+		@error = "Заполните поле \"Ваше имя\"" if @visit_name == nil
+		@error = "Заполните поле \"Ваш номер телефона\"" if @visit_phone == nil
+		@error = "Заполните поле \"Желаемая время\"" if @visit_time == nil
+		break if @error == 0
+	end
 
 	f = File.open './public/clients.txt', 'a'
 	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{hh[@visit_color]}"
