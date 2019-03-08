@@ -31,6 +31,7 @@ post '/' do
 end
 
 post '/visit' do
+	@error = ''
 	hh = {"#7bd148" => "Green",
 		"#5484ed" => "Bold blue",
 		"#a4bdfc" => "Blue",
@@ -51,16 +52,29 @@ post '/visit' do
 		@visit_color = params['visit_color']
 
 		if @visit_name == ''
-			@error = "Заполните поле \"Ваше имя\""
-			return erb :visit
-		elsif @visit_phone == ''
-			@error = "Заполните поле \"Номер телефона\""
-			return erb :visit
-		elsif @visit_time == ''
-			@error = "Заполните поле \"Время визита\""
+			@error = "Заполните поле: \"Ваше имя\""
+		end
+
+		if @visit_phone == ''
+			if @error != ''
+				@error += " ,\"Номер телефона\""
+			else
+				@error = "Заполните поле: \"Номер телефона\""
+			end
+		end			
+		
+		if @visit_time == ''
+			if @error != ''
+				@error += " ,\"Время визита\""
+			else
+				@error = "Заполните поле: \"Время визита\""
+			end
+		end
+
+		if @error != ''
 			return erb :visit
 		end
-		
+
 	f = File.open './public/clients.txt', 'a'
 	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{hh[@visit_color]}"
 	f.close
