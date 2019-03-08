@@ -50,6 +50,17 @@ post '/visit' do
 		@visit_specialist = params['visit_specialist']
 		@visit_color = params['visit_color']
 
+		if @visit_name == ''
+			@error = "Заполните поле \"Ваше имя\""
+			return erb :visit
+		elsif @visit_phone == ''
+			@error = "Заполните поле \"Номер телефона\""
+			return erb :visit
+		elsif @visit_time == ''
+			@error = "Заполните поле \"Время визита\""
+			return erb :visit
+		end
+		
 	f = File.open './public/clients.txt', 'a'
 	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{hh[@visit_color]}"
 	f.close
