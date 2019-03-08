@@ -47,7 +47,7 @@
 				</div>
 			</nav>
 			<div>
-				<%if @error != nil then %>
+				<%if @error != nil && @error != '' then %>
 						<div class="alert alert-warning alert-dismissible fade show " role="alert"><%=@error%>
 						</div>
 				<% end %>
