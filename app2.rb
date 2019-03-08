@@ -31,7 +31,6 @@ post '/' do
 end
 
 post '/visit' do
-	@error = ''
 	colors = {"#7bd148" => "Green",
 				"#5484ed" => "Bold blue",
 				"#a4bdfc" => "Blue",
@@ -51,15 +50,17 @@ post '/visit' do
 		@visit_specialist = params['visit_specialist']
 		@visit_color = params['visit_color']
 
-		validator = { 'visit_name' => "Заполните поле: \"Ваше имя\". ",
-						'visit_phone' => "Заполните поле: \"Номер телефона\". ",
-						'visit_time' => "Заполните поле: \"Время визита\". "}
+		validator = { 'visit_name' => "Заполните поле: \"Ваше имя\"",
+						'visit_phone' => "Заполните поле: \"Номер телефона\"",
+						'visit_time' => "Заполните поле: \"Время визита\""}
 		
-		validator.each do |key, value|
-			if params[key] == ''
-				@error += validator[key]
-			end
-		end
+		#validator.each do |key, value|
+		#	if params[key] == ''
+		#		@error += validator[key]
+		#	end
+		#end
+
+		@error = validator.select {|key,_| params[key] == ''}.values.join(", ")
 
 		if @error != ''
 			return erb :visit
