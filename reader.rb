@@ -1,4 +1,5 @@
 # encoding: cp866
+def rewrite_tablet
 x = File.open './public/clients.txt', 'r:UTF-8'
 @xx = []
 loop do
@@ -44,7 +45,8 @@ end
 f.write "\t</tbody>\n"
 f.write "</table>\n"
 f.close
-gets
+end
+rewrite_tablet
 
 
 	

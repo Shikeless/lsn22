@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require "./reader"
 
 get '/' do
 	@error = "something wrong!"
@@ -16,6 +17,7 @@ get '/about' do
 end
 
 get '/tablet' do
+	rewrite_tablet
 	erb :tablet
 end
 
@@ -42,15 +44,11 @@ post '/visit' do
 		"#dbadff" => "Purple",
 		"#e1e1e1" => "Gray"}
 
-	loop do
-		@error = 0
 		@visit_name = params['visit_name']
 		@visit_phone = params['visit_phone']
 		@visit_time = params['visit_time']
 		@visit_specialist = params['visit_specialist']
 		@visit_color = params['visit_color']
-		break if @error == 0
-	end
 
 	f = File.open './public/clients.txt', 'a'
 	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{hh[@visit_color]}"
