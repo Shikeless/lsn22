@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
+require 'pony'
 require "./reader"
 
 get '/' do
-	@error = "something wrong!"
 	erb ''
 end
 
@@ -65,6 +65,25 @@ post '/visit' do
 		if @error != ''
 			return erb :visit
 		end
+
+		#Pony.mail({
+		#	:subject => "Barbershop запись подтверждена",
+  		#	:body => "Уважаемый #{@visit_name}, вас будет ждать #{@visit_specialist}, в #{@visit_time}, до скорого.",
+  		#	:to => 'example@gmail.com',
+  		#	:from =>  'example@yandex.ru',
+  		#	:via => :smtp,
+  		#	:via_options => {
+    	#		:address        		=> 'smtp.yandex.ru',
+    	#		:port           		=> '25',
+    	#		:user_name     		 	=> 'example@yandex.ru',
+    	#		:password       		=> '12345',
+    	#		:enable_starttls_auto 	=> true,
+ 		#	}
+		#})
+
+		#через cmd с mailsend1.19.exe
+		#system ("mailsend1.19.exe -to example@gmail.com -from example@yandex.ru -ssl -port 465 -auth -smtp smtp.yandex.ru -subject \"Barbershop booking confirmed\" -M \"Уважаемый #{@visit_name}, вас будет ждать #{@visit_specialist}, в #{@visit_time}, до скорого.\" -user example@yandex.ru -pass example")
+
 
 	f = File.open './public/clients.txt', 'a'
 	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{colors[@visit_color]}"
