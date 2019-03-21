@@ -1,3 +1,4 @@
+require 'sqlite3'
 require 'rubygems'
 require 'sinatra'
 require 'pony'
@@ -84,10 +85,19 @@ post '/visit' do
 		#через cmd с mailsend1.19.exe
 		#system ("mailsend1.19.exe -to example@gmail.com -from example@yandex.ru -ssl -port 465 -auth -smtp smtp.yandex.ru -subject \"Barbershop booking confirmed\" -M \"Уважаемый #{@visit_name}, вас будет ждать #{@visit_specialist}, в #{@visit_time}, до скорого.\" -user example@yandex.ru -pass example")
 
+    #Запись в файл
+	#f = File.open './public/clients.txt', 'a'
+	#f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{colors[@visit_color]}"
+	#f.close
 
-	f = File.open './public/clients.txt', 'a'
-	f.write "#{@visit_name}\n#{@visit_phone}\n#{@visit_time}\n#{@visit_specialist}\n#{colors[@visit_color]}"
-	f.close
+	#Запись в БД
+	db = SQLite3::Database.new 'Customers.sqlite'
+
+	db.execute "INSERT INTO Customers (Name, Phone, Time, Specialist, Color) Values ('#{@visit_name}', '#{@visit_phone}', '#{@visit_time}', '#{@visit_specialist}', '#{colors[@visit_color]}')"
+
+	db.close
+
+
 
     erb "Уважаемый #{@visit_name}, вас будет ждать #{@visit_specialist}, в #{@visit_time}, до скорого."
 end
