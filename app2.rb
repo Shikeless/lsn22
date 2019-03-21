@@ -3,7 +3,7 @@ require 'rubygems'
 require 'sinatra'
 require 'pony'
 require 'sinatra/reloader'
-require "./reader"
+require "./reader.rb"
 
 get '/' do
 	erb ''
