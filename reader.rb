@@ -57,40 +57,49 @@ def rewrite_tablet
 
 	db = SQLite3::Database.new 'Customers.sqlite'
 
-	$f = File.open './views/tablet.erb', 'w'
-	$f.write "<table class=\"table table-dark\">\n" 
-	$f.write	"\t<thead>\n"
-	$f.write "\t\t<tr>\n"
-	$f.write "\t\t\t<th scope=\"col\">No</th>\n"
-	$f.write "\t\t\t<th scope=\"col\">Name</th>\n"
-	$f.write "\t\t\t<th scope=\"col\">Time</th>\n"
-	$f.write "\t\t\t<th scope=\"col\">Phone</th>\n"
-	$f.write "\t\t\t<th scope=\"col\">Specialist</th>\n"
-	$f.write "\t\t\t<th scope=\"col\">Color</th>\n"
-	$f.write "\t\t</tr>\n"
-	$f.write "\t</thead>\n"
-	$f.write "\t<tbody>\n"
+	@f = File.open './views/tablet.erb', 'w'
+	@f.write "<table class=\"table table-dark\">\n" 
+	@f.write	"\t<thead>\n"
+	@f.write "\t\t<tr>\n"
+	@f.write "\t\t\t<th scope=\"col\">No</th>\n"
+	@f.write "\t\t\t<th scope=\"col\">Name</th>\n"
+	@f.write "\t\t\t<th scope=\"col\">Time</th>\n"
+	@f.write "\t\t\t<th scope=\"col\">Phone</th>\n"
+	@f.write "\t\t\t<th scope=\"col\">Specialist</th>\n"
+	@f.write "\t\t\t<th scope=\"col\">Color</th>\n"
+	@f.write "\t\t</tr>\n"
+	@f.write "\t</thead>\n"
+	@f.write "\t<tbody>\n"
+
 
 	db.execute "SELECT * FROM Customers" do |n1, n2, n3, n4, n5, n6|
-		$f.write "\t\t<tr>\n"
-		$f.write "\t\t\t<th scope=\"row\">#{n1}</th>\n"
-		$f.write "\t\t\t<td>#{n2}</td>\n"
-	    $f.write "\t\t\t<td>#{n3}</td>\n"
-		$f.write "\t\t\t<td>#{n4}</td>\n"
-		$f.write "\t\t\t<td>#{n5}</td>\n"
-		$f.write "\t\t\t<td>#{n6}</td>\n"
-		$f.write "\t\t</tr>\n"
+		@f.write "\t\t<tr>\n"
+		@f.write "\t\t\t<th scope=\"row\">#{n1}</th>\n"
+		@f.write "\t\t\t<td>#{n2}</td>\n"
+	    @f.write "\t\t\t<td>#{n3}</td>\n"
+		@f.write "\t\t\t<td>#{n4}</td>\n"
+		@f.write "\t\t\t<td>#{n5}</td>\n"
+		@f.write "\t\t\t<td>#{n6}</td>\n"
+		@f.write "\t\t</tr>\n"
 	end
 
-	$f.write "\t</tbody>\n"
-	$f.write "</table>\n"
-
 	db.close
-	$f.close
+
+	@f.write "\t</tbody>\n"
+	@f.write "</table>\n"
+
+	@f.close
 
 end
 
 rewrite_tablet
 
-
 	
+#$f.write "\t\t<tr>\n"
+#		$f.write "\t\t\t<th scope=\"row\">#{n1}</th>\n"
+#		$f.write "\t\t\t<td>#{n2}</td>\n"
+#	    $f.write "\t\t\t<td>#{n3}</td>\n"
+#		$f.write "\t\t\t<td>#{n4}</td>\n"
+#		$f.write "\t\t\t<td>#{n5}</td>\n"
+#		$f.write "\t\t\t<td>#{n6}</td>\n"
+#		$f.write "\t\t</tr>\n"
