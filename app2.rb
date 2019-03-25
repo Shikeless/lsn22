@@ -5,6 +5,10 @@ require 'pony'
 require 'sinatra/reloader'
 require "./reader.rb"
 
+configure do
+	@db = SQLite3::Database.new 'Customers.sqlite'
+end
+
 get '/' do
 	erb ''
 end
@@ -93,7 +97,7 @@ post '/visit' do
 	#Запись в БД
 	db = SQLite3::Database.new 'Customers.sqlite'
 
-	db.execute "INSERT INTO Customers (Name, Phone, Time, Specialist, Color) Values ('#{@visit_name}', '#{@visit_phone}', '#{@visit_time}', '#{@visit_specialist}', '#{colors[@visit_color]}')"
+	db.execute  'INSERT INTO Customers (Name, Phone, Time, Specialist, Color) Values (?, ?, ?, ?, ?)', [@visit_name, @visit_phone, @visit_time, @visit_specialist, colors[@visit_color]]
 
 	db.close
 
