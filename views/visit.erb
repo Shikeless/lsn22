@@ -15,11 +15,11 @@
  			<div class="form-group col-md-5">
    				<label for="exampleFormControlSelect1">Выберите специалиста:</label>
 		        <select class="form-control" name="visit_specialist">
-		     		<option>Пьер</option>
-		      		<option>Жан</option>
-		      		<option>Леопольд</option>
-		      		<option>Мустафа</option>
-		     		<option>Геннадий</option>
+		     		<option <%= @visit_specialist == 'Пьер' ? 'selected' : '' %>>Пьер</option>
+		      		<option <%= @visit_specialist == 'Жан' ? 'selected' : '' %>>Жан</option>
+		      		<option <%= @visit_specialist == 'Лепоольд' ? 'selected' : '' %>>Леопольд</option>
+		      		<option <%= @visit_specialist == 'Мустафа' ? 'selected' : '' %>>Мустафа</option>
+		     		<option <%= @visit_specialist == 'Геннадий' ? 'selected' : '' %>>Геннадий</option>
 		   		</select>
 		   	</div>
 		   	<div class="form-group col-md-5">
