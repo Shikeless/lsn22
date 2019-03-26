@@ -1,17 +1,21 @@
 	<p class="h5">Заполните форму для записи к специалисту</p>
  		<form action='/visit' method='post'>
+
   			<div class="form-group col-md-5">
    				<label for="exampleInputEmail1">Введите имя:</label>
 	    		<input type="text" class="form-control" name="visit_name" aria-describedby="emailHelp" placeholder="Пример: Иванов Алексей Васильевич" value= "<%= @visit_name%>">
   			</div>
+
  			<div class="form-group col-md-5">
 			    <label for="exampleInputPassword1">Введите номер телефона:</label>
 			    <input type="text" class="form-control" name='visit_phone' placeholder="Пример: +7-977-662-12-40" value= "<%= @visit_phone%>">
  			</div>
+
  			<div class="form-group col-md-5">
 			    <label for="exampleInputPassword1">Введите желаемое время сеанса:</label>
-			    <input type="text" class="form-control" name='visit_time' placeholder="Пример: 12:30" value= "<%= @visit_time%>">
+			    <input id="datetimepicker" type="text" class="form-control" name='visit_time' placeholder="Пример: 12:30" value= "<%= @visit_time%>">
  			</div>
+
  			<div class="form-group col-md-5">
    				<label for="exampleFormControlSelect1">Выберите специалиста:</label>
 		        <select class="form-control" name="visit_specialist">
@@ -22,6 +26,7 @@
 		     		<option <%= @visit_specialist == 'Геннадий' ? 'selected' : '' %>>Геннадий</option>
 		   		</select>
 		   	</div>
+
 		   	<div class="form-group col-md-5">
 		   		<label for="exampleInputPassword1">В какой цвет хотите покраситься?:</label>
 		   		<select id="colorpicker" name="visit_color">
@@ -39,11 +44,42 @@
 					<option value="#e1e1e1">Gray</option>
 				</select>
 		    </div>
+
   			<button type="submit" class="btn btn-primary">Записаться</button>
+  			
+
+  			<!-- body of datetimepicker-Boostrap-4 -->
+  			<!--<div class="container">
+			    <div class="row">
+			        <div class="col-sm-6">
+			            <div class="form-group">
+			                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+			                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+			                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+			                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			        
+			    </div>
+			</div>-->
+
 		</form>
 </html>
+
+<!--<script type="text/javascript">
+    $(function () 	
+    {
+		$('#datetimepicker1').datetimepicker();
+	});
+</script>-->
+
+
+
 <script type="text/javascript">
 	$(function(){
 $('#colorpicker').simplecolorpicker();
+$('#datetimepicker').datetimepicker();
 });
 </script>
