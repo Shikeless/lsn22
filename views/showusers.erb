@@ -1,0 +1,4 @@
+<%= @db = SQLite3::Database.new 'Customers.sqlite' %>
+<%= @db.execute 'SELECT * FROM Customers order by Id asc' do |row| 
+    puts row
+end%>

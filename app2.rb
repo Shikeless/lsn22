@@ -5,8 +5,36 @@ require 'pony'
 require 'sinatra/reloader'
 require "./reader.rb"
 
+
+
+def get_db
+	return SQLite3::Database.new 'Customers.sqlite'
+end
+
 configure do
-	@db = SQLite3::Database.new 'Customers.sqlite'
+	db = get_db
+
+	barbers = ['Пьер', 'Жан', 'Лепоольд', 'Мустафа', 'Геннадий']
+    @aa = []
+
+	db.execute 'CREATE TABLE IF NOT EXISTS "Barbers" 
+		( `Id` INTEGER PRIMARY KEY AUTOINCREMENT, 
+		`Name` TEXT
+		)'
+
+	db.execute 'SELECT Name FROM Barbers' do |row|
+		row = row.to_s.delete("[\"")
+		row = row.delete("]")
+		@aa << row 
+	end
+
+	barbers.each do |bar|
+		if @aa.include?(bar) == false
+			db.execute 'INSERT INTO Barbers (Name) VALUES (?)', [bar]
+		end
+	end
+
+  	db.close
 end
 
 get '/' do
@@ -24,6 +52,9 @@ end
 get '/tablet' do
 	rewrite_tablet
 	erb :tablet
+end
+
+get '/showusers' do
 end
 
 post '/' do
@@ -59,6 +90,7 @@ post '/visit' do
 						'visit_phone' => "Заполните поле: \"Номер телефона\"",
 						'visit_time' => "Заполните поле: \"Время визита\""}
 		
+		#validator old version
 		#validator.each do |key, value|
 		#	if params[key] == ''
 		#		@error += validator[key]
@@ -95,13 +127,9 @@ post '/visit' do
 	#f.close
 
 	#Запись в БД
-	db = SQLite3::Database.new 'Customers.sqlite'
+	@db.execute  'INSERT INTO Customers (Name, Phone, Time, Specialist, Color) Values (?, ?, ?, ?, ?)', [@visit_name, @visit_phone, @visit_time, @visit_specialist, colors[@visit_color]]
 
-	db.execute  'INSERT INTO Customers (Name, Phone, Time, Specialist, Color) Values (?, ?, ?, ?, ?)', [@visit_name, @visit_phone, @visit_time, @visit_specialist, colors[@visit_color]]
-
-	db.close
-
-
+	@db.close
 
     erb "Уважаемый #{@visit_name}, вас будет ждать #{@visit_specialist}, в #{@visit_time}, до скорого."
 end
