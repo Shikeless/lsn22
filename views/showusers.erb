@@ -1,4 +1,29 @@
-<%= @db = SQLite3::Database.new 'Customers.sqlite' %>
-<%= @db.execute 'SELECT * FROM Customers order by Id asc' do |row| 
-    puts row
-end%>
+<table class="table table-dark">
+
+	<thead>
+		<tr>
+			<th scope="col">No</th>
+			<th scope="col">Name</th>
+			<th scope="col">Time</th>
+			<th scope="col">Phone</th>
+			<th scope="col">Specialist</th>
+			<th scope="col">Color</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% @results.each do |row| %>
+
+		<tr>
+			<td scope="row"><%= row['Id'] %></td>	
+			<td><%= row['Name'] %></td>
+			<td><%= row['Phone'] %></td>
+			<td><%= row['Time'] %></td>
+			<td><%= row['Specialist'] %></td>
+			<td><%= row['Color'] %></td>
+		</tr>
+
+	<% end %>
+	</tbody>
+
+</table>

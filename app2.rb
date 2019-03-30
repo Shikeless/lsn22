@@ -3,12 +3,15 @@ require 'rubygems'
 require 'sinatra'
 require 'pony'
 require 'sinatra/reloader'
-require "./reader.rb"
+#реврайтер из .rb файла с перезаписью tablet.erb
+#require "./reader.rb"
 
 
 
 def get_db
-	return SQLite3::Database.new 'Customers.sqlite'
+	db = SQLite3::Database.new 'Customers.sqlite'
+	db.results_as_hash = true
+  	return db
 end
 
 configure do
@@ -23,8 +26,9 @@ configure do
 		)'
 
 	db.execute 'SELECT Name FROM Barbers' do |row|
-		row = row.to_s.delete("[\"")
-		row = row.delete("]")
+		row = row.to_s.delete("{Name=>")
+		row = row.delete("}")
+		row = row.delete("\"")
 		@aa << row 
 	end
 
@@ -50,11 +54,9 @@ get '/about' do
 end
 
 get '/tablet' do
-	rewrite_tablet
-	erb :tablet
-end
-
-get '/showusers' do
+	db = get_db 
+	@results = db.execute 'SELECT * FROM Customers ORDER BY Id DESC'
+	erb :showusers
 end
 
 post '/' do
@@ -67,7 +69,8 @@ post '/' do
 end
 
 post '/visit' do
-	colors = {"#7bd148" => "Green",
+	colors = 	{
+				"#7bd148" => "Green",
 				"#5484ed" => "Bold blue",
 				"#a4bdfc" => "Blue",
 				"#46d6db" => "Turquoise",
@@ -78,17 +81,20 @@ post '/visit' do
 				"#ff887c" => "Red",
 				"#dc2127" => "Bold red",
 				"#dbadff" => "Purple",
-				"#e1e1e1" => "Gray"}
+				"#e1e1e1" => "Gray"
+				}
 
-		@visit_name = params['visit_name']
-		@visit_phone = params['visit_phone']
-		@visit_time = params['visit_time']
-		@visit_specialist = params['visit_specialist']
-		@visit_color = params['visit_color']
+	@visit_name = params['visit_name']
+	@visit_phone = params['visit_phone']
+	@visit_time = params['visit_time']
+	@visit_specialist = params['visit_specialist']
+	@visit_color = params['visit_color']
 
-		validator = { 'visit_name' => "Заполните поле: \"Ваше имя\"",
-						'visit_phone' => "Заполните поле: \"Номер телефона\"",
-						'visit_time' => "Заполните поле: \"Время визита\""}
+	validator = { 
+				'visit_name' => "Заполните поле: \"Ваше имя\"",
+				'visit_phone' => "Заполните поле: \"Номер телефона\"",
+				'visit_time' => "Заполните поле: \"Время визита\""
+				}
 		
 		#validator old version
 		#validator.each do |key, value|
@@ -97,11 +103,11 @@ post '/visit' do
 		#	end
 		#end
 
-		@error = validator.select {|key,_| params[key] == ''}.values.join(", ")
+	@error = validator.select {|key,_| params[key] == ''}.values.join(", ")
 
-		if @error != ''
-			return erb :visit
-		end
+	if @error != ''
+		return erb :visit
+	end
 
 		#Pony.mail({
 		#	:subject => "Barbershop запись подтверждена",

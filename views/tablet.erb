@@ -1,4 +1,5 @@
 <table class="table table-dark">
+
 	<thead>
 		<tr>
 			<th scope="col">No</th>
@@ -9,70 +10,20 @@
 			<th scope="col">Color</th>
 		</tr>
 	</thead>
+
 	<tbody>
+	<% @results.each do |row| %>
+
 		<tr>
-			<th scope="row">1</th>
-			<td>Leo</td>
-			<td>6774383</td>
-			<td>13:30</td>
-			<td>Пьер</td>
-			<td>Bold red</td>
+			<td scope="row"><%= row['Id'] %></td>	
+			<td><%= row['Name'] %></td>
+			<td><%= row['Phone'] %></td>
+			<td><%= row['Time'] %></td>
+			<td><%= row['Specialist'] %></td>
+			<td><%= row['Color'] %></td>
 		</tr>
-		<tr>
-			<th scope="row">2</th>
-			<td>Alex</td>
-			<td>6774383</td>
-			<td>12:30</td>
-			<td>Леопольд</td>
-			<td>Light green</td>
-		</tr>
-		<tr>
-			<th scope="row">3</th>
-			<td>Pedro</td>
-			<td>7494940</td>
-			<td>13:30</td>
-			<td>Геннадий</td>
-			<td>Yellow</td>
-		</tr>
-		<tr>
-			<th scope="row">4</th>
-			<td>Mike</td>
-			<td>13161316</td>
-			<td>11:00</td>
-			<td>Жан</td>
-			<td>Gray</td>
-		</tr>
-		<tr>
-			<th scope="row">5</th>
-			<td>Pedro</td>
-			<td>1616171</td>
-			<td>10:00</td>
-			<td>Жан</td>
-			<td></td>
-		</tr>
-		<tr>
-			<th scope="row">6</th>
-			<td>Ellf</td>
-			<td>1516171</td>
-			<td>09:30</td>
-			<td>Жан</td>
-			<td></td>
-		</tr>
-		<tr>
-			<th scope="row">7</th>
-			<td>Harry</td>
-			<td>15161711</td>
-			<td>15:30</td>
-			<td>Леопольд</td>
-			<td>Yellow</td>
-		</tr>
-		<tr>
-			<th scope="row">8</th>
-			<td>asdfadf</td>
-			<td>12323135</td>
-			<td>2019/03/05 01:00</td>
-			<td>Леопольд</td>
-			<td>Turquoise</td>
-		</tr>
+
+	<% end %>
 	</tbody>
+
 </table>
