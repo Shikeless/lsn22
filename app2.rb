@@ -63,7 +63,7 @@ end
 
 get '/visit' do
 	db = get_db 
-	@results_brb = db.execute 'SELECT * FROM Customers ORDER BY Id DESC'
+	@results_brb = db.execute 'SELECT * FROM Barbers'
 	erb :visit
 end
 
