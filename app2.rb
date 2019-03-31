@@ -14,10 +14,22 @@ def get_db
   	return db
 end
 
+def is_barber_exists? db, nam
+	db.execute('SELECT * FROM Barbers WHERE Name = ?', [nam]).length > 0 
+end
+
+def seed_db db, barbers
+	barbers.each do |bar|
+		if !is_barber_exists? db, bar
+			db.execute 'INSERT INTO Barbers (Name) VALUES (?)', [bar]
+		end
+	end
+end
+
 configure do
 	db = get_db
 
-	barbers = ['Пьер', 'Жан', 'Лепоольд', 'Мустафа', 'Геннадий']
+	@barbers = ['Пьер', 'Жан', 'Лепоольд', 'Мустафа', 'Геннадий', 'Поль']
     @aa = []
 
 	db.execute 'CREATE TABLE IF NOT EXISTS "Barbers" 
@@ -25,18 +37,22 @@ configure do
 		`Name` TEXT
 		)'
 
-	db.execute 'SELECT Name FROM Barbers' do |row|
-		row = row.to_s.delete("{Name=>")
-		row = row.delete("}")
-		row = row.delete("\"")
-		@aa << row 
-	end
+	seed_db db, @barbers
 
-	barbers.each do |bar|
-		if @aa.include?(bar) == false
-			db.execute 'INSERT INTO Barbers (Name) VALUES (?)', [bar]
-		end
-	end
+	#спорный синтаксис с костылями
+	#db.execute 'SELECT Name FROM Barbers' do |row|
+	#	row = row.to_s.delete("{Name=>")
+	#	row = row.delete("}")
+	#	row = row.delete("\"")
+	#	@aa << row 
+	#end
+
+	#спорный синтаксис с костылями
+	#@barbers.each do |bar|
+	#	if @aa.include?(bar) == false
+	#		db.execute 'INSERT INTO Barbers (Name) VALUES (?)', [bar]
+	#	end
+	#end
 
   	db.close
 end
@@ -46,6 +62,8 @@ get '/' do
 end
 
 get '/visit' do
+	db = get_db 
+	@results_brb = db.execute 'SELECT * FROM Customers ORDER BY Id DESC'
 	erb :visit
 end
 
@@ -55,7 +73,7 @@ end
 
 get '/tablet' do
 	db = get_db 
-	@results = db.execute 'SELECT * FROM Customers ORDER BY Id DESC'
+	@results_cstm = db.execute 'SELECT * FROM Customers ORDER BY Id DESC'
 	erb :showusers
 end
 
